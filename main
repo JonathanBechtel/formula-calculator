@@ -1,0 +1,309 @@
+<!Doctype HTML>
+<html>
+<head>
+	<style type="text/css">
+		td {
+			padding: 5px;
+
+		}
+		
+		body, html {
+			width: 100%;
+			height: 100%;
+		}
+		
+		input {
+			width: 120px;
+		}
+	</style>
+</head>
+<body>
+<h1 style ="text-align: center;">Supplement Pricing Calculator</h1>
+
+<h2 style="text-align: center;">Enter Your Ingredients Below</h2>
+
+<h3><em>Per Serving</em></h3>
+
+<form name="ingredient-table">
+<datalist id="ingredients">
+	<option value="Creatine Monohydrate">
+	<option value="St. John's Wort">
+	<option value="5-HTP">
+	<option value="Magnesium">
+	<option value="Magnesium Citrate">
+	<option value="Vitamin A">
+	<option value="Vitamin D3">
+	<option value="Cocoa">
+	<option value="Stevia">
+	<option value="Lavender Root Extract">
+</datalist>
+<table border="1" style="padding: 5px;">
+	<tr>
+		<td>Ingredient Name</td>
+		<td>Amount (in Mg)</td>
+		<td>% Carrier</td>
+		<td>$$/Kilo</td>
+		<td></td>
+		<td>Total Carrier Volume</td>
+		<td>Total Ingredient Volume</td>
+	</tr>
+	<tr>
+		<td><input type="text" id="a" list="ingredients"></input></td>
+		<td><input type="number" id="b"> Mg</input></td>
+		<td><input type="number" id="c"></input> %</td>
+		<td><input id="d"></input></td>
+		<td><button type="button" onclick="calculate('a', 'b', 'c', 'd', 'e', 'f')">Calculate Final Volume</button></td>
+		<td id="e"><input></input></td>
+		<td id="f"><input></input></td>
+		<td><a href="#" onclick="toggleRow('row2')">New Ingredient</a></td>
+
+	</tr>
+	<tr id="row2" style="display: none;">
+		<td><input type="text" id="h" list="ingredients"></input></td>
+		<td><input type="number" id="i"> Mg</input></td>
+		<td><input type="number" id="j"></input> %</td>
+		<td><input id="k"></input></td>
+		<td><button type="button" onclick="calculate('h', 'i', 'j', 'k', 'l', 'm')">Calculate Final Volume</button></td>
+		<td id="l"><input></input></td>
+		<td id="m"><input></input></td>
+		<td><a href="#" onclick="toggleRow('row3')">New Ingredient</a></td>
+		<td><a href="#" onclick="toggleRow('row2')">Delete Ingredient</a></td>
+	</tr>
+	<tr id="row3" style="display: none;">
+		<td><input type="text" id="o" list="ingredients"></input></td>
+		<td><input type="number" id="p"> Mg</input></td>
+		<td><input type="number" id="q"></input> %</td>
+		<td><input id="r"></input></td>
+		<td><button type="button" onclick="calculate('o', 'p', 'q', 'r', 's', 't')">Calculate Final Volume</button></td>
+		<td id="s"><input></input></td>
+		<td id="t"><input></input></td>
+		<td><a href="#" onclick="toggleRow('row4')">New Ingredient</a></td>
+		<td><a href="#" onclick="toggleRow('row3')">Delete Ingredient</a></td>
+	</tr>
+	<tr id="row4" style="display: none;">
+		<td><input type="text" id="v" list="ingredients"></input></td>
+		<td><input type="number" id="w"> Mg</input></td>
+		<td><input type="number" id="x"></input> %</td>
+		<td><input id="y"></input></td>
+		<td><button type="button" onclick="calculate('v', 'w', 'x', 'y', 'z', 'a1')">Calculate Final Volume</button></td>
+		<td id="z"><input></input></td>
+		<td id="a1"><input></input></td>
+		<td><a href="#" onclick="toggleRow('row5')">New Ingredient</a></td>
+		<td><a href="#" onclick="toggleRow('row4')">Delete Ingredient</a></td>
+	</tr>
+	<tr id="row5" style="display: none;">
+		<td><input type="text" id="a3" list="ingredients"></input></td>
+		<td><input type="number" id="a4"> Mg</input></td>
+		<td><input type="number" id="a5"></input> %</td>
+		<td><input id="a6"></input></td>
+		<td><button type="button" onclick="calculate('a3', 'a4', 'a5', 'a6', 'a7', 'a8')">Calculate Final Volume</button></td>
+		<td id="a7"><input></input></td>
+		<td id="a8"><input></input></td>
+		<td><a href="#" onclick="noMoreRows()">New Ingredient</a></td>
+		<td><a href="#" onclick="toggleRow('row5')">Delete Ingredient</a></td>
+	</tr>
+</table>
+</form>
+
+<button type="button" onclick="calculate2()">Click to Calculate Serving Totals</button>
+
+<h3>Serving Totals</h3>
+<form name ="serving-totals"> 
+<table border="1" style="padding: 5px;">
+	<tr>
+		<td>Sum Carrier Volume</td>
+		<td>Sum Ingredient Volume</td>
+	</tr>
+	<tr>
+		<td id="tableCalc"><input></input></td>
+		<td id="tableCalc2"><input></input></td>
+	</tr>
+</table>
+</form>
+
+<h3>Per Bottle</h3>
+<button type="button" onclick="bottle_volume('td1', 'td2', 'td3', 'td4', 'td5', 'td6', 'td7', 'td8', 'td9', 'td10', 'td11', 'td12', 'td13', 'td14', 'td15', 'td16', 'td17', 'td18', 'td19', 'td20')">Click to Calculate Bottle Totals</button>
+<table border="1" style="padding: 5px;">
+<tr>
+	<td>Ingredient</td>
+	<td>Total Amount of Carrier</td>
+	<td>Total Per Bottle</td>
+	<td>Total Cost Per Bottle</td>
+</tr>
+<tr id="outputRow1">
+	<td id="td1"><input></input></td>
+	<td id="td2"><input></input></td>
+	<td id="td3"><input></input></td>
+	<td id="td4"><input></input></td>
+</tr>
+<tr id="outputRow2" style="display: none;">
+	<td id="td5"><input></input></td>
+	<td id="td6"><input></input></td>
+	<td id="td7"><input></input></td>
+	<td id="td8"><input></input></td>
+</tr>
+<tr id="outputRow3" style="display: none;">
+	<td id="td9"><input></input></td>
+	<td id="td10"><input></input></td>
+	<td id="td11"><input></input></td>
+	<td id="td12"><input></input></td>
+</tr>
+<tr id="outputRow4" style="display: none;">
+	<td id="td13"><input></input></td>
+	<td id="td14"><input></input></td>
+	<td id="td15"><input></input></td>
+	<td id="td16"><input></input></td>
+</tr>
+<tr id="outputRow5" style="display: none;">
+	<td id="td17"><input></input></td>
+	<td id="td18"><input></input></td>
+	<td id="td19"><input></input></td>
+	<td id="td20"><input></input></td>
+</tr>
+<tr>
+	<td id="td21"><strong>Totals</strong></td>
+	<td id="td22"></td>
+	<td id="td23"></td>
+	<td id="td24"></td>
+</tr>
+</table>
+
+</body>
+<script>
+	var calculate = function(ing, ingVolume, percentCarrier, ingredientCost, totalCarrierVolume, totalIngredientVolume) {
+		var ingredient = document.getElementById(ing).value;
+		var volume = document.getElementById(ingVolume).value || 0;
+		var carrier = document.getElementById(percentCarrier).value || 0;
+		var cost = document.getElementById(ingredientCost).value || 0;
+		var mCarrier = carrier/100;
+		var firstCarrierVolume = mCarrier*(volume/(1-mCarrier));
+		var carrierVolume = document.getElementById(totalCarrierVolume).innerHTML = firstCarrierVolume.toFixed(2)*1;
+		var firstTotalVolume = parseInt(volume) + carrierVolume;
+		var totalVolume = document.getElementById(totalIngredientVolume).innerHTML = firstTotalVolume.toFixed(2)*1;
+		
+		return [ingredient, volume, cost, firstCarrierVolume, firstTotalVolume];
+};
+	
+	var calculate2 = function() {
+		var value1 = calculate('a', 'b', 'c', 'd', 'e', 'f');
+		var subvalue1_1 = value1[3];
+		var subvalue1_2 = value1[4];
+		var value2 = calculate('h', 'i', 'j', 'k', 'l', 'm');
+		var subvalue2_1 = value2[3];
+		var subvalue2_2 = value2[4];
+		var value3 = calculate('o', 'p', 'q', 'r', 's', 't');
+		var subvalue3_1 = value3[3];
+		var subvalue3_2 = value3[4];
+		var value4 = calculate('v', 'w', 'x', 'y', 'z', 'a1');
+		var subvalue4_1 = value4[3];
+		var subvalue4_2 = value4[4];
+		var value5 = calculate('a3', 'a4', 'a5', 'a6', 'a7', 'a8');
+		var subvalue5_1 = value5[3];
+		var subvalue5_2 = value5[4];
+		var carrierTotal = subvalue1_1 + subvalue2_1 + subvalue3_1 + subvalue4_1 + subvalue5_1;
+		var IngredientTotal = subvalue1_2 + subvalue2_2 + subvalue3_2 + subvalue4_2 + subvalue5_2;
+		document.getElementById("tableCalc").innerHTML = carrierTotal.toFixed(2);
+		document.getElementById("tableCalc2").innerHTML = IngredientTotal.toFixed(2);
+		
+		var rowArray = ["outputRow1", "outputRow2", "outputRow3", "outputRow4", "outputRow5"];
+		
+
+};
+	
+	var bottle_volume = function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20) {
+		var ing1Value = calculate('a', 'b', 'c', 'd', 'e', 'f');
+		var ing1 = ing1Value[0];
+		var ing1_carrier = ing1Value[3]*30;
+		var ing1_volume = ing1Value[4]*30;
+		var ing1_cost = (ing1_volume/1000000)*ing1Value[2];
+		var name1 = document.getElementById(arg1).innerHTML = ing1;
+		var carrier1 = document.getElementById(arg2).innerHTML = ing1_carrier.toFixed(2)*1;
+		var ing_volume1 = document.getElementById(arg3).innerHTML = ing1_volume.toFixed(2)*1;
+		var ingCost1 = document.getElementById(arg4).innerHTML ="$" + ing1_cost.toFixed(2)*1;
+		
+		var ing2Value = calculate('h', 'i', 'j', 'k', 'l', 'm');
+		var ing2 = ing2Value[0];
+		var ing2_carrier = ing2Value[3]*30;
+		var ing2_volume = ing2Value[4]*30;
+		var ing2_cost = (ing2_volume/1000000)*ing2Value[2];
+		var name2 = document.getElementById(arg5).innerHTML = ing2;
+		var carrier2 = document.getElementById(arg6).innerHTML = ing2_carrier.toFixed(2)*1;
+		var ing_volume2 = document.getElementById(arg7).innerHTML = ing2_volume.toFixed(2)*1;
+		var ingCost2 = document.getElementById(arg8).innerHTML = "$" + ing2_cost.toFixed(2)*1;
+
+		var ing3Value = calculate('o', 'p', 'q', 'r', 's', 't');
+		var ing3 = ing3Value[0];
+		var ing3_carrier = ing3Value[3]*30;
+		var ing3_volume = ing3Value[4]*30;
+		var ing3_cost = (ing3_volume/1000000)*ing3Value[2];
+		var name3 = document.getElementById(arg9).innerHTML = ing3;
+		var carrier3 = document.getElementById(arg10).innerHTML = ing3_carrier.toFixed(2)*1;
+		var ing_volume3 = document.getElementById(arg11).innerHTML = ing3_volume.toFixed(2)*1;
+		var ingCost3 = document.getElementById(arg12).innerHTML = "$" + ing3_cost.toFixed(2)*1;
+		
+		var ing4Value = calculate('v', 'w', 'x', 'y', 'z', 'a1');
+		var ing4 = ing4Value[0];
+		var ing4_carrier = ing4Value[3]*30;
+		var ing4_volume = ing4Value[4]*30;
+		var ing4_cost = (ing4_volume/1000000)*ing4Value[2];
+		var name4 = document.getElementById(arg13).innerHTML = ing4;
+		var carrier4 = document.getElementById(arg14).innerHTML = ing4_carrier.toFixed(2)*1;
+		var ing_volume4 = document.getElementById(arg15).innerHTML = ing4_volume.toFixed(2)*1;
+		var ingCost4 = document.getElementById(arg16).innerHTML = "$" + ing4_cost.toFixed(2)*1;
+		
+		var ing5Value = calculate('a3', 'a4', 'a5', 'a6', 'a7', 'a8');
+		var ing5 = ing5Value[0];
+		var ing5_carrier = ing5Value[3]*30;
+		var ing5_volume = ing5Value[4]*30;
+		var ing5_cost = (ing5_volume/1000000)*ing5Value[2];
+		var name5 = document.getElementById(arg17).innerHTML = ing5;
+		var carrier5 = document.getElementById(arg18).innerHTML = ing5_carrier.toFixed(2)*1;
+		var ing_volume5 = document.getElementById(arg19).innerHTML = ing5_volume.toFixed(2)*1;
+		var ingCost5 = document.getElementById(arg20).innerHTML = "$" + ing5_cost.toFixed(2)*1;
+		
+		carrierPerBottle = ing1_carrier + ing2_carrier + ing3_carrier + ing4_carrier + ing5_carrier;
+		volumePerBottle = ing1_volume + ing2_volume + ing3_volume + ing4_volume + ing5_volume;
+		costPerBottle = ing1_cost + ing2_cost + ing3_cost + ing4_cost + ing5_cost;
+		
+		document.getElementById("td22").innerHTML = carrierPerBottle.toFixed(2)*1;
+		document.getElementById("td23").innerHTML = volumePerBottle.toFixed(2)*1;
+		document.getElementById("td24").innerHTML = "$" + costPerBottle.toFixed(2)*1;
+		
+	var rowArray = ["row2", "row3", "row4", "row5"]; // Skip row 1, always shows;
+	var outputArray = ["outputRow2", "outputRow3", "outputRow4", "outputRow5"];
+	for (i = 0; i < rowArray.length; i++) {
+		if (document.getElementById(rowArray[i]).getAttribute("style") != "display: none;"){
+			//console.log("True");
+		document.getElementById(outputArray[i]).setAttribute("style", "");
+	} else {
+		//console.log("False");
+		document.getElementById(outputArray[i]).setAttribute("style", "display: none;");
+		}
+	}
+};
+
+	function toggleRow(id) {
+		var p = document.getElementById(id);
+		
+		if (p.style.display =='table-row') {
+			p.style.display = 'none';
+			var inputs = p.getElementsByTagName('input');
+			for (i = 0; i < inputs.length; i++) {
+				inputs[i].value = "";
+			}
+		}
+		
+		else {
+			p.style.display = 'table-row';
+		}
+};
+
+	function listName () {
+		document.getElementById("td1").innerHTML = ingName1;
+}
+
+	function noMoreRows() {
+		window.alert("You can only add up to 5 ingredients.");
+};
+</script>
+</html>
