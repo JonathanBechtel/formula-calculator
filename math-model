@@ -56,6 +56,16 @@ For Ingredients You Sourced Yourself:
 
 obj1 = ingredient1, M1 = Math.ceil(obj1.totalRunAmount/J1) = packsRequired1, M1*H1 = Total$$1, obj1.totalRunAmount = amtForRun1, J1-(obj1.totalRunAmount/1000) = AmtLeftover, obj1.totalRunAmount/(J1*1000) = % Used1, Math.floor(AmtLeftover/obj1.totalBottleAmount) = #ContainerLeft1, Math.floor(J1*M1*1000/obj1.totalBottleAmount) = #ContainersEntireAmt
 
-Total Amount Required to Get Started: sum(Total$$1:Total$$N) + 
+Total Amount Required to Get Started: sum(Total$$1:Total$$N) + yourManufacturerCosts
+
+Upfront Ingredient Costs: sum(Total$$1:Total$$n)
+	Amount Used on 1st Run: (%used1*TotalSS1) + (%usedn+TotalSSn)
+	Amount Leftover: (TotalSS1*(1-%used1)) + (%usedn+Total$$n)
+	
+Amount Paid to Manufacturer: totalRunPrice - yourIngredientCosts;
+	Ingredients = yourManufacturerCosts
+	Materials = B*0.10
+	Testing = myIngredients.length * 80
+	Markup = (yourManufacturerCosts + B*0.10 + myIngredients.length*80)*0.2
 
 
