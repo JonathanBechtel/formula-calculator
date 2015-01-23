@@ -1,0 +1,61 @@
+#Section 1 - Your Manufacturing Run
+a = desired_manufacturing_price
+b = number_of_containers
+c = servings_per_container
+
+#Section 2 - Enter Your Formula 
+D1 = ingredient1, E1 = Amount1, F1 = % Carrier1, H1 = $$/Kilo1, I1 = Sourced By Manufacturer1, J1 = Min. Pack Size1; #variables for each row in table
+D2 = ingredient1, E2 = Amount1, F2 = % Carrier1, H2 = $$/Kilo1, I2 = Sourced By Manufacturer2, J2 = Min. Pack Size2;
+etc.  
+
+#Section 3 - Totals for One Serving
+D1 = ingredient1, k1 = (f1/100)*(E1/(1-(F1/100))) = Carrier1**, E1 = Active1, K1 + E1 = Total Amount1;
+D2 = ingredient1, k2 = (f2/100)*(E2/(1-(F2/100))) = Carrier2**, E2 = Active2, K2 + E2 = Total Amount2;
+etc.
+Totals: carrierServingTotal = sum(K1:Kn), activeServingTotal = sum(E1:En), totalServingAmount = sum(K1:Kn) + sum(E1:En);
+
+**This calculation turns the user input for % carrier into a decimal (f1/100) and then multiplies that amount against the total amount of the ingredient (E1/(1-(F1/100)))
+**to get the amount of carrier.
+
+Section 4 - Totals for One Bottle
+D1 = ingredient1, K1*C = carrier1, E1*C = Active1, (K1+E1)*C = totalBottleAmount1 = L1, (L1/1000)*H1 = bottlePrice1*;
+D2 = ingredient2, K2*C = carrier2, E2*C = Active2, (K2+E2)*C = totalBottleAmount2 = L2, (L2/1000)*H2 = bottlePrice2*;
+etc. 
+Totals: carrierBottleTotal = sum(K1:Kn)*C, activeBottleTotal = sum(E1:En)*C, totalBottleAmount = sum(L1:Ln), totalBottlePrice = sum(Price1:Pricen);
+
+*This calculation takes the total amount in one bottle, which is in milligrams, and then turns it into kilograms (Ln/1000)
+*and then multiplies it by the $$/kilo weight entered in the original formula table. 
+
+Section 5 - Totals for One Run
+D1 = ingredient1, K1*C*B = Carrier1, E1*C*B = Active1, L1*B = totalRunAmount1, (L1/1000)*H1*B = runPrice1;
+D2 = ingredient2, K2*C*B = Carrier2, E2*C*B = Active2, L2*B = totalRunAmount2, (L2/1000)*H2*B = runPrice2;
+etc.
+Totals: carrierRunTotal = sum(K1:Kn)*C*B, activeRunTotal = sum(E1:En)*C*B, totalRunAmount = sum(L1:Ln)*B, totalRunPrice = sum(runPrice1:runPricen);
+
+Section 6 - Financials
+
+If h = "Yes" [ing1, ing2, ing3, ing4, ing5, ingN]; #array of objects for ingredients that are sourced by manufacturer
+If h = "No" [obj1, obj2, obj3, obj4, obj5, objN] = myIngredients;  #array of objects for ingredients that are sourced yourself
+*refers to original question 'Sourced by Manufacturer?" in first table.
+
+Ingredient Cost per Bottle:
+        for you: sum(obj1.bottlePrice1:objn.bottlePricen) = yourBottlePrice;
+		for manufacturer: sum(ing1.bottlePrice1:ingn:bottlePricen) = manuBottlePrice;
+		total = totalBottlePrice;
+		
+Inclusive Bottle Price = (totalBottlePrice + 0.10 + ((myIngredients.count*80)/B))*1.20;
+
+Total Ingredient Costs:
+		for you: sum(obj1.runPrice1:objn.runPricen) = yourIngredientCosts;
+		for manufacturer: sum(ing1.runPrice1:ingn.runPricen) = your ManufacturerCosts;
+		total = totalRunPrice;
+		
+total Inclusive Cost: (totalBottlePrice + B*0.10 + myIngredients.count*80)*1.20;
+
+For Ingredients You Sourced Yourself:
+
+obj1 = ingredient1, M1 = Math.ceil(obj1.totalRunAmount/J1) = packsRequired1, M1*H1 = Total$$1, obj1.totalRunAmount = amtForRun1, J1-(obj1.totalRunAmount/1000) = AmtLeftover, obj1.totalRunAmount/(J1*1000) = % Used1, Math.floor(AmtLeftover/obj1.totalBottleAmount) = #ContainerLeft1, Math.floor(J1*M1*1000/obj1.totalBottleAmount) = #ContainersEntireAmt
+
+Total Amount Required to Get Started: sum(Total$$1:Total$$N) + 
+
+
