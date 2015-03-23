@@ -1,230 +1,439 @@
-	//variables that'll be saved from form in first part of form
-	servingsPerBottle = 30;
-	bottlesPerRun = 1500;
-	
-	//array that'll hold all ingredients w/in formula
-	var formula = [];
-	//array that'll hold carrier amounts w/in formula
-	var carrierServingArr = [];
-	//array that'll hold total ingredient amounts per serving w/in formula
-	var totalServingArr = [];
-	//array that'll hold total amount of carrier for each ingredient in a single bottle
-	var totalCarrierBottleArr = [];
-	//array that'll hold total amount of each ingredient in a bottle, carrier + actives included
-	var totalServingBottleArr = [];
-	//array that'll hold total amount of carrier for each ingredient in a run
-	var totalCarrierRunArr = [];
-	//array that'll hold total amount of each ingredient in a run, carrier + actives included
-	var totalServingRunArr = [];
-	
+	var state;
+	var init = function() {
+		state = {
+			runInfo: {
+				price: null,
+				containers: null,
+				servings: null
+			},
+			formula: [],
+			servingRows: [],
+			servingTotals: {
+				carrier: null,
+				active: null,
+				totalAmount: null,
+			},
+			bottleRows: [],
+			bottleTotals: {
+				carrier: null,
+				active: null,
+				totalAmount: null,
+				price: null
+			},
+			runRows: [],
+			runTotals: {
+				carrier: null,
+				active: null,
+				totalAmount: null,
+				price: null
+			},
+			sourcedIngredientRows: []
+		};
+	};
+
+	//Calculation Functions//
+
+	//****Section 3****//
+
 	//calculates amount of carrier in each serving of product
-	var carrierPerIngredient = function(ingredient) {
-		return (ingredient.carrier/100)*(ingredient.amount/(1-(ingredient.carrier/100)));
+	var carrierPerIngredient = function(x) {
+		return (state.formula[x].carrier/100)*(state.formula[x].active/(1-(state.formula[x].carrier/100)));
 	};
-	
-	// ------ Formulas for Section 3 ----------------- //
-	
-	//returns array of carrier amounts for each ingredient on a per serving basis
-	var	listCarrierPerServing = function() {
-			for (var i = 0; i < formula.length; i++) {
-				carrierServingArr.push(carrierPerIngredient(formula[i]));
-			}
-	};
-	
+
 	//calculates total amount for each ingredient in serving
-	var servingTotalPerIngredient = function(ingredient) {
-		return carrierServingArr[ingredient] + formula[ingredient].amount;
+	var totalPerIngredient = function(x) {
+		return carrierPerIngredient(x) + state.formula[x].active;
 	};
-	
-	//returns array of total ingredient amounts for each ingredient
-	var listServingTotalAmount = function() {
-		for (var i = 0; i < formula.length; i++) {
-			totalServingArr.push(servingTotalPerIngredient(i));
-		}
+
+	//adds together all state.servingRows[x].carrier in servingRows []
+	var totalCarrierServing = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.servingRows[i].carrier;
+		};
+
+		return total;
 	};
-	
-	//calculates total carrier amount for individual serving by adding together values in carrierServingArr
-	var carrierPerServing = function() {
-		return carrierServingArr.reduce(function (i, c) {
-			return i + c
-		});
-	};
-	
-	//calculates total amount of actives in a serving 
+
+	//total amount of active ingredients in a serving
 	var totalActivesServing = function() {
-		var activesArr = [];
-		for (var i = 0; i < formula.length; i++) {
-			activesArr.push(formula[i].amount);
-		}
-		
-		return activesArr.reduce(function (i, c) {
-			return i + c
-		});
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.servingRows[i].active;
+		};
+
+		return total;
 	};
-	
-	//calculates total ingredient amount for a serving, carrier + actives included
-	var amountPerServing = function() {
-		return totalServingArr.reduce(function (i, c) {
-			return i + c
-		});
+
+	//total amount in a serving, including actives and carrier
+	var totalAmountServing = function() {
+		return totalActivesServing() + totalCarrierServing();
 	};
-	
+
 	// ------------- Formulas for Section 4 ------------------------- //
-	
+
 	//calculates total amount of carrier for an ingredient in a single bottle.
-	var carrierAmtPerBottle = function(ingredient) {
-		return carrierServingArr[ingredient] * servingsPerBottle;
+	var carrierPerBottle = function(x) {
+		return state.servingRows[x].carrier * state.runInfo.servings;
 	};
-	
-	//stores carrier/bottle amount in an array
-	var listCarrierPerBottle = function() {
-		for (var i = 0; i < formula.length; i++) {
-			totalCarrierBottleArr.push(carrierAmtPerBottle(i));
-		}
+
+	//amount of an active ingredient in a single bottle
+	var activePerBottle = function(x) {
+		return state.servingRows[x].active * state.runInfo.servings;
 	};
-	
-	//calculates total ingredient amt per bottle
-	var servingTotalPerBottle = function(ingredient) {
-		return totalCarrierBottleArr[ingredient] + (formula[ingredient].amount * servingsPerBottle);
+
+	//total amount of ingredient in a bottle
+	var totalPerBottle = function(x) {
+		return carrierPerBottle(x) + activePerBottle(x);
 	};
-	
-	//stores per bottle serving totals for each ingredient in an array
-	var listTotalServingPerBottle = function() {
-		for (var i = 0; i < formula.length; i++) {
-			totalServingBottleArr.push(servingTotalPerBottle(i));
-		}
+
+	//total ingredient cost of an ingredient within a bottle
+	var costPerBottle = function(x) {
+		return (totalPerBottle(x)/1000000) * state.formula[x].price;
 	};
-	
-	// calculates price of each ingredient in the bottle
-	var priceIngredientBottle = function(i) {
-		return (totalServingBottleArr[i]/1000000) * formula[i].usdperkilo;
+
+	//total amount of carrier in a bottle for all ingredients
+	var totalCarrierBottle = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.bottleRows[i].carrier;
+		};
+
+		return total;
 	};
-	
-	//adds up values of carrier/bottle of each ingredient
-	var carrierPerBottle = function() {
-		return totalCarrierBottleArr.reduce(function (i, c) {
-			return i + c
-		});
-	};
-	
-	//calculates total amount of actives in a serving 
+
+	//total amount of active ingredients w/in a bottle
 	var totalActivesBottle = function() {
-		return totalActivesServing() * servingsPerBottle;
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.bottleRows[i].active;
+		};
+
+		return total;
 	};
-	
-	//adds up values of total amount of each ingredient per bottle
-	var totalPerBottle = function() {
-		return totalServingBottleArr.reduce(function (i, c) {
-			return i + c
-		});
+
+	//total amount of all product within a bottle
+	var totalAmountBottle = function() {
+		return totalCarrierBottle() + totalActivesBottle();
 	};
-	
-	//sums up the total price of the bottle ** - I didn't create an additional array to do this, unlike other functions.  Is this better? 
-	var totalPriceBottle = function() {
-		tempPriceArray = [];
-		for (var i = 0; i < formula.length; i++) {
-			tempPriceArray.push(priceIngredientBottle(i));
-		}
-		
-		return tempPriceArray.reduce(function (i, c) {
-			return i + c
-		});
-	}
-	
+
+	//total Cost to make a bottle
+	var totalCostBottle = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.bottleRows[i].price;
+		};
+
+		return total;
+	};
+
+
+
 	// --------------- Formulas for Section 5 ---------------------- //
-	
+
 	//calculates amount of carrier for each ingredient in a run
-	var carrierPerRun = function(ingredient) {
-		return carrierAmtPerBottle(ingredient) * bottlesPerRun;
+	var carrierPerRun = function(x) {
+		return (state.bottleRows[x].carrier * state.runInfo.containers)/1000000;
 	};
-	
-	//stores values from carrierPerRun in an array
-	var listCarrierPerRun = function() {
-		for (var i = 0; i < formula.length; i++) {
-			totalCarrierRunArr.push(carrierPerRun(i));
-		}
-	};
-	
+
 	//calculates total amount needed for each ingredient in an entire run
-	var totalPerRun = function(ingredient) {
-		return totalCarrierRunArr[ingredient] + (formula[ingredient].amount * servingsPerBottle * bottlesPerRun);
+	var activePerRun = function(x) {
+		return (state.bottleRows[x].active * state.runInfo.containers)/1000000;
 	};
-	
-	//stores values for totalPerRun for each ingredient in an array
-	var listTotalPerRun = function() {
-		for (var i = 0; i < formula.length; i++) {
-			totalServingRunArr.push(totalPerRun(i));
-		}
+
+	//total amount of an ingredient needed for a run
+	var totalPerRun = function(x) {
+		return carrierPerRun(x) + activePerRun(x);
 	};
-	
-	//calculates total price of an ingredient for an entire run
-	var priceIngredientRun = function(i) {
-		return (totalServingBottleArr[i]/1000000) * formula[i].usdperkilo * bottlesPerRun;
+
+	//total cost of an ingredient for a run
+	var costPerRun = function(x) {
+		return totalPerRun(x) * state.formula[x].price;
 	};
-	
-	//adds up values in totalCarrierRunArr, giving a total amount of carrier used for the entire run
-	var totalCarrierPerRun = function() {
-		return totalCarrierRunArr.reduce(function (i, c) {
-			return i + c
-		});
+
+	//total amount of carrier for an ingredient in a run
+	var totalCarrierRun = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.runRows[i].carrier;
+		};
+
+		return total;
 	};
-	
-	//sums up the total actives for an entire run
+
+	//total amount of active ingredients w/in a run
 	var totalActivesRun = function() {
-		return totalActivesBottle() * bottlesPerRun;
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.runRows[i].active;
+		};
+
+		return total;
 	};
-	
-	//adds up values in totalServingRunArr, giving a total amount produced for the entire run
-	var totalAmtPerRun = function() {
-		return totalServingRunArr.reduce(function (i, c) {
-			return i + c
-		});
+
+	//total amount used up in a run, carrier + active included
+	var totalAmountRun = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.runRows[i].totalAmount;
+		};
+
+		return total;
 	};
-	
-	//calculates total sum of the price for all ingredients in a run
-	var totalPriceRun = function() {
-		tempPriceArray = [];
-		for (var i = 0; i < formula.length; i++) {
-			tempPriceArray.push(priceIngredientRun(i));
-		}
-		
-		return tempPriceArray.reduce(function (i, c) {
-			return i + c
-		});
-	}
-	
-	
-	
-		//example function to add new Ingredient objects into the formula array from initial form.
-		addIngredient = function(name, amount, carrier, usdperkilo, origin, packSize) {
-			var ingredient = {
-				name: name,
-				amount: amount,
-				carrier: carrier,
-				usdperkilo: usdperkilo,
-				origin: origin,
-				packSize: packSize
+
+	//total dollar cost for all ingredients w/in a run
+	var totalCostRun = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			total += state.runRows[i].price;
+		};
+
+		return total;
+	};
+
+	//******Formulas for Section 6 *******//
+
+	//Amount of money you'll have to pay per bottle for ingredients you sourced
+	var perBottleCostForYou = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			if (state.formula[i].origin === false) {
+				total += state.bottleRows[i].price;
+			};
+		};
+		return total;
+	};
+
+	//Amount of money per bottle that's paid for ingredients sourced by your manufacturer
+	var perBottleCostForManufacturer = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			if (state.formula[i].origin === true) {
+				total += state.bottleRows[i].price;
+			};
+		};
+		return total;
+	};
+
+	//total ingredient costs for one run that's paid for ingredients you sourced
+	var totalIngredientCostForYou = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			if (state.formula[i].origin === true) {
+				total += state.runRows[i].price;
+			};
+		};
+		return total;
+	};
+
+	//total ingredient costs for one run for ingredients sourced by your manufacturer
+	var totalIngredientCostForManufacturer = function() {
+		var total = 0;
+		for (var i = 0; i < state.formula.length; i++) {
+			if (state.formula[i].origin === false) {
+				total += state.runRows[i].price;
+			};
+		};
+		return total;
+	};
+
+	//estimated per bottle quote from manufacturer accounting for ingredients, materials and profit margin
+	var estimatedQuotePrice = function() {
+		return perBottleCostForManufacturer() + .25 + (perBottleCostForManufacturer() * 0.2) + ((state.sourcedIngredientRows.length * 50)/state.runInfo.containers);
+	};
+
+	//*********Function for Ingredients that you sourced yourself in Section 6**********
+
+	//calculates total upfront ingredient costs required at beginning of run
+	var costPerPack = function(x) {
+		return state.formula[x].price * state.formula[x].packSize;
+	};
+
+	//amount of packs required for sourcing the ingredient
+	var packsRequired = function(x) {
+		return Math.ceil(state.runRows[x].totalAmount/state.formula[x].packSize);
+	};
+
+	//total cost for all packs bought
+	var costForAllPacks = function(x) {
+		return packsRequired(x) * costPerPack(x);
+	};
+
+	//percent of your ingredient used on your run
+	var percentUsed = function(x) {
+		return state.runRows[x].totalAmount / (packsRequired(x) * state.formula[x].packSize);
+	};
+
+	//amount you have leftover after your run
+	var amountLeftOver = function(x) {
+		return (packsRequired(x) * state.formula[x].packSize) - state.runRows[x].totalAmount;
+	};
+
+	//number of bottles remaining for your ingredient
+	var bottlesRemaining = function(x) {
+		return Math.floor(amountLeftOver(x) / (state.bottleRows[x].totalAmount/1000000))
+	};
+
+	//**********End of Functions for Self-sourced ingredient rows************//
+
+	//total purchase price for ingredients at the beginning
+	var upfrontIngredientCost = function() {
+		total = 0;
+		for (var i = 0; i < state.sourcedIngredientRows.length; i++) {
+		total += state.sourcedIngredientRows[i].costForAllPacks
+		};
+		return total;
+	};
+
+	//value of ingredients used on run
+	var upfrontIngredientCostUsedOnRun = function() {
+		total = 0;
+		for (var i = 0; i < state.sourcedIngredientRows.length; i++) {
+			total += (state.sourcedIngredientRows[i].costForAllPacks * state.sourcedIngredientRows[i].percentUsed);
+		};
+		return total;
+	};
+
+	//value of ingredients leftover after run
+	var amtIngredientsLeftOver = function() {
+		return upfrontIngredientCost() - upfrontIngredientCostUsedOnRun();
+	};
+
+	//estimated amount to pay to manufacturer - estimated quote price * bottles in run
+	var amtPaidToMfctr = function() {
+		return estimatedQuotePrice() * state.runInfo.containers;
+	};
+
+	//value of upfront ingredient costs + amount you'll pay to the manufacturer
+	var totalUpfrontCosts = function() {
+		return upfrontIngredientCost() + amtPaidToMfctr();
+	};
+
+	//******Storage Functions******//
+
+	//**Adds run info from first row into master object**//
+	var manufacturingInfo = function(price, containers, servings) {
+		state.runInfo.price = price;
+		state.runInfo.containers = containers;
+		state.runInfo.servings = servings;
+	};
+
+	//**Adds ingredient info from section 2 into [formula] array**//
+	var addIngredient = function(ingredient, active, carrier, price, origin, packSize) {
+		var ingredient = {
+			ingredient: ingredient,
+			active: active,
+			carrier: carrier,
+			price: price,
+			origin: origin,
+			packSize: packSize
+		};
+
+		state.formula.push(ingredient);
+
+	};
+
+	//Adds row from section 3 as object literal into servingRows[]
+	var	addSection3Row = function(x) {
+
+		  var row = {
+				ingredient: state.formula[x].ingredient,
+				carrier: carrierPerIngredient(x),
+				active: state.formula[x].active,
+				totalAmount: totalPerIngredient(x)
 			};
 
-			formula.push(ingredient);
+			state.servingRows.push(row);
+		};
+
+	//totals up values from section 3 and adds them in state.servingTotals object
+	var addSection3Totals = function() {
+		state.servingTotals.carrier = totalCarrierServing();
+		state.servingTotals.active = totalActivesServing();
+		state.servingTotals.totalAmount = totalAmountServing();
+	};
+
+	//Adds row from section 4 as object literal into bottleRows[]
+	var	addSection4Row = function(x) {
+
+			var row = {
+				ingredient: state.formula[x].ingredient,
+				carrier: carrierPerBottle(x),
+				active: activePerBottle(x),
+				totalAmount: totalPerBottle(x),
+				price: costPerBottle(x)
+			}
+
+			state.bottleRows.push(row);
+		};
+
+	//takes sums of all values from section 4 and puts them in state.bottleTotals object
+	var addSection4Totals = function() {
+		state.bottleTotals.carrier = totalCarrierBottle();
+		state.bottleTotals.active = totalActivesBottle();
+		state.bottleTotals.totalAmount = totalAmountBottle();
+		state.bottleTotals.price = totalCostBottle();
+	};
+
+	//Adds row from section 5 as object literal into runRows[]
+	var	addSection5Row = function(x) {
+
+			var row = {
+				ingredient: state.formula[x].ingredient,
+				carrier: carrierPerRun(x),
+				active: activePerRun(x),
+				totalAmount: totalPerRun(x),
+				price: costPerRun(x)
+			}
+
+			state.runRows.push(row);
+	};
+
+	//takes sums of all values from section 5 and puts them in state.RunTotals object
+	var addSection5Totals = function() {
+		state.runTotals.carrier = totalCarrierRun();
+		state.runTotals.active = totalActivesRun();
+		state.runTotals.totalAmount = totalAmountRun();
+		state.runTotals.price = totalCostRun();
+	};
+
+	//adds rows for self-sourced ingredients
+	var addSourcedIngredientRows = function(x) {
+		if (state.formula[x].origin === false) {
+			var row = {
+				ingredient: state.formula[x].ingredient,
+				costPerPack: costPerPack(x),
+				packsRequired: packsRequired(x),
+				costForAllPacks: costForAllPacks(x),
+				percentUsed: percentUsed(x),
+				amountLeftOver: amountLeftOver(x),
+				bottlesRemaining: bottlesRemaining(x)
+			}
+
+			state.sourcedIngredientRows.push(row);
 		}
+	};
 
-//functions used to test the program is working properly		
-addIngredient("St. John's Wort", 500, 4, 25, true, 25);
-addIngredient("5-HTP", 200, 2, 165, true, 25);
-addIngredient("Stevia", 100, 4, 35, true, 25);
-listCarrierPerServing();
-listServingTotalAmount();
-listCarrierPerBottle();
-listTotalServingPerBottle();
-listCarrierPerRun();
-listTotalPerRun();
-console.log(totalActivesRun());
+	//
 
-//This returned "undefined" but not sure why
-//var totalPriceBottle = function() {
-	//	tempPriceArray = 0;
-		//for (var i = 0; i < formula.length; i++) {
-			//total += priceIngredientBottle(i);
-		//}
-//	}
+init();
+manufacturingInfo(10, 750, 30);
+addIngredient("St. John's Wort", 500, 4, 35, true, 25);
+addIngredient("5-HTP", 100, 2, 165, true, 25);
+addIngredient("Creatine", 5000, 0, 8, true, 25);
+addSection3Row(0);
+addSection3Row(1);
+addSection3Row(2);
+addSection3Totals();
+addSection4Row(0);
+addSection4Row(1);
+addSection4Row(2);
+addSection4Totals();
+addSection5Row(0);
+addSection5Row(1);
+addSection5Row(2);
+addSection5Totals();
+addSourcedIngredientRows(0);
+addSourcedIngredientRows(1);
+addSourcedIngredientRows(2);
+console.log(state);
