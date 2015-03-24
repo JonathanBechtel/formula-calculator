@@ -1,0 +1,36 @@
+Two types of DOM interactions:
+- Manipulating elements around (cloning, hiding, showing)
+- Retrieving data from the DOM and inserting data into the DOM
+
+Manipulating elements
+-----------------------
+Examples: creating another form row, hiding initial form, showing results page
+
+Retrieving elements
+-----------------------
+- First create a function that triggers from an event (such as clicking a button)
+  - This function will read the form, taking the data from each input and storing it in the data structure
+
+- The other part is a function that retrieves data from the structure, and fills the DOM
+  - This function reads data from the data structure and inserts it into the DOM
+
+
+Creating two pages out of one
+--------------------------------
+
+HTML
+
+<body>
+  <div class="main1"></div>
+  <div class="main2"></div>
+</body>
+
+CSS
+
+.main1 {}
+.main2 { display: none; }
+
+JS
+
+$('.main1').hide();
+$('.main2').show();
