@@ -50,7 +50,7 @@
 		var total = 0;
 		for (var i = 0; i < state.formula.length; i++) {
 			total += state.servingRows[i].carrier;
-		};
+		}
 
 		return total;
 	};
@@ -60,7 +60,7 @@
 		var total = 0;
 		for (var i = 0; i < state.formula.length; i++) {
 			total += state.servingRows[i].active;
-		};
+		}
 
 		return total;
 	};

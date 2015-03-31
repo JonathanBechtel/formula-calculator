@@ -1,586 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Dosage, Toxicity, Health benefits and physiology of vitamin ">
-	<meta name="keywords" content="">
-	<meta name="author" content="">
-	
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <meta name="description" content="Dosage, Toxicity, Health benefits and physiology of vitamin ">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  	<!-- Latest compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	
-	<style>
-		#tr2, #tr3, #tr4, #tr5, #tr6, #tr7, #tr8, #tr9, #tr10, #tr11, #tr12, #tr13, #tr14, #tr15, #tr16, #tr17, #tr18, #tr19, #tr20,
-		#tr21, #tr22, #tr23, #tr24, #tr25, #tr26, #tr27, #tr28, #tr29, #tr30, #tr31, #tr32, #tr33, #tr34, #tr35, #tr36, #tr37, #tr38, #tr39,
-		#tr40, #tr41, #tr42, #tr43, #tr44, #tr45, #tr46, #tr47, #tr48, #tr49, #tr50, #part2 {
-			visibility: hidden;
-		};
-	</style>
-	
-	<script>
-		$(document).ready(function(){
-			$("span.glyphicon-plus-sign").click(function() {
-				$(this).parents("tr").next("tr").css("visibility", "visible");
-			});
-			
-			$("span.glyphicon-minus-sign").click(function() {
-				$(this).parents("tr").css("visibility", "hidden");
-			});
-			
-			$("#tableDropDown").on('change', function(){
-				if ($(this).val() === "Me") {
-					$("#packSize").removeAttr('disabled');
-				}
-				
-				else {
-					$("#packSize").attr({'disabled': 'disabled'});
-				}
-			});
-		});
-	</script>
-	
-</head>
-<body>
-	<div class="container">
-	<h1 class="text-center">Formulation Calculator</h1>
-	<div id="part1">
-	<form>
-		<table class="table table-striped">
-		<caption class="text-center">Enter the ingredients for your formula below on a per-serving basis.</caption>
-		<tbody>
-			<tr>
-				<td>Ingredient</td>
-				<td>Amount</td>
-				<td>% Carrier</td>
-				<td>$$/Kilo</td>
-				<td>Who Sources?</td>
-				<td>Min. Pack Size</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr id="tr1">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select id="tableDropDown" style="min-width: 100px;"><option value="other">The Manufacturer</option><option value="me">Me</option></select></td>
-				<td><input id="packSize" type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td></td>
-			</tr>
-			<tr id="tr2">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select id="tableDropDown" style="min-width: 100px;"><option value="other">The Manufacturer</option><option value="me">Me</option></select></td>
-				<td><input id="packSize" type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr3">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select id="tableDropDown" style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input id="packSize" type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr4">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr5">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr6">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr7">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr8">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr9">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr10">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr11">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr12">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr13">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr14">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr15">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr16">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr17">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr18">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr19">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr20">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr21">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr22">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr23">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr24">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr25">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr26">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr27">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr28">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr29">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr30">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr31">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr32">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr33">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr34">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr35">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr36">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr37">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr38">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr39">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr40">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr41">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr42">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr43">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr44">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr45">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr46">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr47">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr48">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr49">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			<tr id="tr50">
-				<td><input type="text"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><input type="number"></input></td>
-				<td><select style="min-width: 100px;"><option>The Manufacturer</option><option>Me</option></select></td>
-				<td><input type="number" disabled></input></td>
-				<td><a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>
-				<td><a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>
-			</tr>
-			</tbody>
-		</table>
-	</form>
-	</div>
-	<div id="part2">
-	<p>Something for now.</p>
-	</div>
-</body>
+  	<!-- Optional theme -->
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="main.css">
+
+  	<!-- Latest compiled and minified JavaScript -->
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="data-model.js"></script>
+  	<script src="interactions.js"></script>
+  </head>
+  <body>
+  	<div class="container">
+  	  <h1 class="text-center">Formulation Calculator</h1>
+      <div id="part1">
+        <form>
+          <table class="table table-striped">
+            <caption class="text-center">Enter the ingredients for your formula below on a per-serving basis.</caption>
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Amount</th>
+                <th>% Carrier</th>
+                <th>$$/Kilo</th>
+                <th>Who Sources?</th>
+                <th>Min. Pack Size</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+        			<tr class="ingredient">
+        				<td>
+                  <input type="text">
+                </td>
+        				<td>
+                  <input type="number">
+                </td>
+        				<td>
+                  <input type="number">
+                </td>
+        				<td>
+                  <input type="number">
+                </td>
+        				<td>
+                  <select class="tableDropDown" style="min-width: 100px;">
+                    <option value="other">The Manufacturer</option>
+                    <option value="me">Me</option>
+                  </select>
+                </td>
+        				<td>
+                  <input class="packSize" type="number" disabled>
+                </td>
+        				<td>
+                  <a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+                </td>
+        				<td>
+                  <a><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a>
+                </td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </form>
+      </div>
+      <div id="part2">
+        <p>Something for now.</p>
+  	  </div>
+    </div>
+  </body>
 </html>
