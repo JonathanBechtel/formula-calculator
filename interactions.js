@@ -13,6 +13,11 @@ $(document).ready(function(){
     $(tbody).append(cloned_ingredient);
 
     $('span.glyphicon-minus-sign').show();
+	
+	var input_fields = $(ingredient).filter(":input");
+	if (input_fields.val().length === 0 && input_fields.prop('disabled', false)) {
+		alert("Please fill in all the fields on this row");
+	}
   });
 
   $("span.glyphicon-minus-sign").click(function() {
@@ -42,7 +47,16 @@ $(document).ready(function(){
 	$("#part1").show();
   });
   
-  $("#ingredientForm").validate({
+  $(".amount").blur(function() {
+	if ($.isNumeric($(this).val()) != $isNumeric(7) || $(".amount").val() === "") {
+		alert("Please enter a valid number in this field.");
+		$(this).val("");
+	}
+	
+
+  });
+  
+  /*$("#ingredientForm").validate({
 	rules: {
 		ingredient: {
 			required: true
@@ -60,5 +74,5 @@ $(document).ready(function(){
 			number: true
 		}
 	}
-  });
+  });*/
 });
