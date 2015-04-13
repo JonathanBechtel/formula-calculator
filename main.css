@@ -5,3 +5,20 @@ span.glyphicon-minus-sign {
 #part2 {
   display: none;
 }
+
+.redClass{
+	background-color: #CDC9C9;
+}
+
+.amount, .carrier, .kilo, .packSize {
+	text-align: right;
+}
+
+th {
+	text-align: center;
+}
+
+p.hidden {
+	display: none;
+	font-size: 11px;
+}
