@@ -15,6 +15,7 @@
     <![endif]-->
 
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	
   	<!-- Latest compiled and minified CSS -->
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
@@ -25,41 +26,54 @@
   	<!-- Latest compiled and minified JavaScript -->
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-    <script src="data-model.js"></script>
   	<script src="interactions.js"></script>
+	<script src="supplement-pricer-2.js"></script>
   </head>
   <body>
-  	<div class="container">
-  	  <h1 class="text-center">Formulation Calculator</h1>
+  	<div class="container-fluid">
+  	  <h1 class="text-center">Formula Analyzer</h1>
       <div id="part1">
-        <form>
+		<div class="row">
+		<div class="col-md-11">
+        <form id="ingredientForm">
           <table class="table table-striped">
             <caption class="text-center">Enter the ingredients for your formula below on a per-serving basis.</caption>
             <thead>
               <tr>
-                <th>Ingredient</th>
-                <th>Amount</th>
+                <th><label for="ingredient">Ingredient</label></th>
+                <th><label for="amount">Amount</label></th>
                 <th>% Carrier</th>
                 <th>$$/Kilo</th>
                 <th>Who Sources?</th>
-                <th>Min. Pack Size</th>
+                <th>Pack Size</th>
                 <th></th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-        			<tr class="ingredient">
+        			<tr class="formulaRow">
         				<td>
-                  <input type="text">
+                  <input type="text" class="ingredient required" name="ingredient">
                 </td>
         				<td>
-                  <input type="number">
+					<div class="input-group">
+                  <input type="number" class="amount required" name="amount" >
+				  <div class="input-group-addon">mg</div>
+				  </div>
                 </td>
         				<td>
-                  <input type="number">
+					<div class = "input-group">
+                    <input type="number" class="carrier required" name="carrier" max="100">
+					<div class="input-group-addon">%</div>
+				  </div>
+				  <p class="hidden">Only use numbers smaller than 100</p>
                 </td>
-        				<td>
-                  <input type="number">
+        				<td class="col-md-1">
+					<div class="input-group">	
+					<div class="input-group-addon">$</div>
+                    <input type="number" class="kilo required" name="kilo">
+				    <div class="input-group-addon">.00</div>
+					</div>
                 </td>
         				<td>
                   <select class="tableDropDown" style="min-width: 100px;">
@@ -68,7 +82,10 @@
                   </select>
                 </td>
         				<td>
+					<div class="input-group">
                   <input class="packSize" type="number" disabled>
+				  <div class="input-group-addon">kg</div>
+					</div>
                 </td>
         				<td>
                   <a><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
@@ -80,8 +97,16 @@
         		</tbody>
         	</table>
         </form>
+		</div>
+		</div>
+		<div class="text-center">
+				<button type="submit" class="analyze">Analyze</button>
+		</div>
       </div>
       <div id="part2">
+		<div class="text-center">
+		<button class="text-center formula">Back to Formula</button>
+		</div>
         <p>Something for now.</p>
   	  </div>
     </div>
