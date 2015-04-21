@@ -33,15 +33,25 @@
   	<div class="container-fluid">
   	  <h1 class="text-center">Formula Analyzer</h1>
       <div id="part1">
+	  <div class="row">
+	  <div class="text-center">
+	  <h3><em>For Your Run</em></h3><br />
+	  <label for="bottlePrice">Desired Price  </label>
+	  <input type=number class="bottlePrice required" name="bottlePrice" placeholder="$0.00">
+	  <label for="containers">Containers  </label>
+	  <input type=number class="containers required" name="containers">
+	  <label for="servings">Servings per Container </label>
+	  <input type=number class="servings required" name="servings">
+	  </div>
+	  </div>
+	  <h3 class="text-center"><em>Per Serving</em></h3>
 		<div class="row">
-		<div class="col-md-11">
         <form id="ingredientForm">
           <table class="table table-striped">
-            <caption class="text-center">Enter the ingredients for your formula below on a per-serving basis.</caption>
             <thead>
               <tr>
-                <th><label for="ingredient">Ingredient</label></th>
-                <th><label for="amount">Amount</label></th>
+                <th>Ingredient</th>
+                <th>Amount</th>
                 <th>% Carrier</th>
                 <th>$$/Kilo</th>
                 <th>Who Sources?</th>
@@ -66,19 +76,19 @@
                     <input type="number" class="carrier required" name="carrier" max="100">
 					<div class="input-group-addon">%</div>
 				  </div>
-				  <p class="hidden">Only use numbers smaller than 100</p>
+				  <p class="message">Only use numbers smaller than 100</p>
                 </td>
-        				<td class="col-md-1">
+        				<td>
 					<div class="input-group">	
 					<div class="input-group-addon">$</div>
-                    <input type="number" class="kilo required" name="kilo">
+                    <input type="number" class="price required" name="price">
 				    <div class="input-group-addon">.00</div>
 					</div>
                 </td>
         				<td>
                   <select class="tableDropDown" style="min-width: 100px;">
-                    <option value="other">The Manufacturer</option>
-                    <option value="me">Me</option>
+                    <option value=true>The Manufacturer</option>
+                    <option value=false>Me</option>
                   </select>
                 </td>
         				<td>
@@ -98,7 +108,6 @@
         	</table>
         </form>
 		</div>
-		</div>
 		<div class="text-center">
 				<button type="submit" class="analyze">Analyze</button>
 		</div>
@@ -107,7 +116,22 @@
 		<div class="text-center">
 		<button class="text-center formula">Back to Formula</button>
 		</div>
-        <p>Something for now.</p>
+		<div class="row">
+        <h2 class="text-center">Breakdown <em>Per Serving</em></h2>
+			<table class="table table-striped" id="servingTable">
+				<thead>
+					<tr>
+						<th>Ingredient</th>
+						<th>Carrier</th>
+						<th>Active</th>
+						<th>Total Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
   	  </div>
     </div>
   </body>
