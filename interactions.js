@@ -9,6 +9,43 @@ var clean_ingredient = function(ingredient) {
 };
 
 //takes info from 1st row and stores it into state.runInfo
+var analyze = function() {
+		//iterates over each tablerow, stores values into state.formula
+		$(".formulaRow").each(function() {
+			var ingredient = $(this).find(".ingredient").val();
+			var amount = parseInt($(this).find(".amount").val());
+			var carrier = parseInt($(this).find(".carrier").val());
+			var price = parseInt($(this).find(".price").val());
+			var origin = $(this).find("select").val();	
+			var packSize = parseInt($(this).find(".packSize").val());
+			
+			addIngredient(ingredient, amount, carrier, price, origin, packSize);
+			
+		});
+		
+		//run functions to put all table data into master data structure
+		setRunInfo();
+		loopSection3();
+		loopSection4();
+		loopSection5();
+		loopSourcedIngredientRows();
+		addSection3Totals();
+		addSection4Totals();
+		addSection5Totals();
+		perBottleCostForYou();
+		
+		//takes each object in state.servingRows and outputs it to a new table.
+		$.each(state.servingRows, function(index, value) {
+			
+			$("#servingTable > tbody").append("<tr class='servingRow'><td>" + state.servingRows[index].ingredient + "</td><td>" + state.servingRows[index].carrier + "</td><td>" +state.servingRows[index].active + "</td><td>" + state.servingRows[index].totalAmount + "</td></tr>");
+		});
+		
+		$("#servingTable > tbody").append("<tr class='servingRow'><td><strong>Totals</strong></td><td><strong>" + state.servingTotals.carrier + "</strong></td><td><strong>" + state.servingTotals.active + "</strong></td><td><strong>" + state.servingTotals.totalAmount + "</strong></td>")
+		$(".financeDiv#1").html("<p>  - For You: " + state.servingRows[0].ingredient + "</p><p>  - For Your Manufacturer: " + perBottleCostForManufacturer() + "</p>");
+		
+		$("#part1").hide();
+		$("#part2").show();
+}
 var setRunInfo = function() {
 	var desiredPrice = parseInt($(".bottlePrice").val());
 	var containers = parseInt($(".containers").val());
@@ -16,6 +53,7 @@ var setRunInfo = function() {
 			
 	manufacturingInfo(desiredPrice, containers, servings);
 };
+
 
 $(document).ready(function(){
   //fn for + sign, clones tr, cleans it, attaches it to end of tbody
@@ -117,39 +155,7 @@ $(document).ready(function(){
     }
 	
 	else {
-		//iterates over each tablerow, stores values into state.formula
-		$(".formulaRow").each(function() {
-			var ingredient = $(this).find(".ingredient").val();
-			var amount = parseInt($(this).find(".amount").val());
-			var carrier = parseInt($(this).find(".carrier").val());
-			var price = parseInt($(this).find(".price").val());
-			var origin = $(this).find("select").val();	
-			var packSize = parseInt($(this).find(".packSize").val());
-			
-			addIngredient(ingredient, amount, carrier, price, origin, packSize);
-			
-		});
-		
-		//run functions to put all table data into master data structure
-		setRunInfo();
-		loopSection3();
-		loopSection4();
-		loopSection5();
-		loopSourcedIngredientRows();
-		addSection3Totals();
-		addSection4Totals();
-		addSection5Totals();
-		
-		//takes each object in state.servingRows and outputs it to a new table.
-		$.each(state.servingRows, function(index, value) {
-			
-		$("#servingTable > tbody").append("<tr class='servingRow'><td>" + state.servingRows[index].ingredient + "</td><td>" + state.servingRows[index].carrier + "</td><td>" +state.servingRows[index].active + "</td><td>" + state.servingRows[index].totalAmount + "</td></tr>");
-		});
-		
-		$("#servingTable > tbody").append("<tr class='servingRow'><td><strong>Totals</strong></td><td><strong>" + state.servingTotals.carrier + "</strong></td><td><strong>" + state.servingTotals.active + "</strong></td><td><strong>" + state.servingTotals.totalAmount + "</strong></td>")
-		
-		$("#part1").hide();
-		$("#part2").show();
+		analyze();
 	}
 });
 
