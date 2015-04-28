@@ -13,6 +13,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	
@@ -25,9 +27,11 @@
 
   	<!-- Latest compiled and minified JavaScript -->
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="jquery.number.min.js"></script>
 
   	<script src="interactions.js"></script>
 	<script src="data-model.js"></script>
+	<script src="charts.js"></script>
   </head>
   <body>
   	<div class="container-fluid">
@@ -47,7 +51,7 @@
 	  <h3 class="text-center"><em>Per Serving</em></h3>
 		<div class="row">
         <form id="ingredientForm">
-          <table class="table table-striped">
+          <table class="table table-striped table-responsive">
             <thead>
               <tr>
                 <th>Ingredient</th>
@@ -114,48 +118,222 @@
       </div>
       <div id="part2">
 		<div class="text-center">
-		<button class="text-center formula">Back to Formula</button>
+			<button class="text-center formula">Back to Formula</button><br />
 		</div>
+		
+		<!-- Begin Tabbed Content -->
+			<div role="tabpanel">
+		
+		<!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#serving" aria-controls="serving" role="tab" data-toggle="tab">Per Serving</a></li>
+    <li role="presentation"><a href="#bottle" aria-controls="bottle" role="tab" data-toggle="tab">Per Bottle</a></li>
+    <li role="presentation"><a href="#run" aria-controls="run" role="tab" data-toggle="tab">Per Run</a></li>
+  </ul>
+		<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="serving">
 		<div class="row">
-        <h2 class="text-center">Breakdown <em>Per Serving</em></h2>
-			<table class="table table-striped" id="servingTable">
-				<thead>
-					<tr>
-						<th>Ingredient</th>
-						<th>Carrier</th>
-						<th>Active</th>
-						<th>Total Amount</th>
-					</tr>
-				</thead>
-				<tbody>
+			<h2 class="text-center">Breakdown <em>Per Serving</em></h2>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4">
+						<hr>
+					</div>
+				</div>
+				<div class="col-md-10 col-md-offset-1">
+					<table class="table table-striped table-responsive" id="servingTable">
+						<thead>
+							<tr>
+								<th>Ingredient</th>
+								<th>Carrier</th>
+								<th>Active</th>
+								<th>Total Amount</th>
+							</tr>
+						</thead>
+						<tbody>
 					
-				</tbody>
-			</table>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
-		<div id="financeSection">
+		<div role="tabpanel" class="tab-pane" id="bottle">
 		<div class="row">
-			<h3 class="text-center">Your Costs</h3>
-			<h4 class="text-center"><em>For Your Run</em></h4>
-			<div class="col-md-6">
-				<p>Ingredient Cost Per Bottle:</p>
-				<div class="col-md-8">
-				<p>  - For You:</p>
-				<p>  - For Your Manufacturer:</p>
+			<h2 class="text-center">Breakdown <em>Per Bottle</em></h2>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4">
+						<hr>
+					</div>
 				</div>
-				<div class="col-md-4">
-				<p class="perBottleCostForYou"></p>
-				<p class="perBottleCostForManufacturer"></p>
+				<div class="col-md-10 col-md-offset-1">
+					<table class="table table-striped table-responsive" id="bottleTable">
+						<thead>
+							<tr>
+								<th>Ingredient</th>
+								<th>Carrier</th>
+								<th>Active</th>
+								<th>Total Amount</th>
+								<th>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+					
+						</tbody>
+					</table>
 				</div>
-			</div>
-			<div class="col-md-6">
-				<p>Total Ingredient Costs:</p>
-				<div class="financeDiv#1">
-				</div>				
-			</div>
 			</div>
 		</div>
+		<div role="tabpanel" class="tab-pane" id="run">
+		<div class="row">
+			<h2 class="text-center">Breakdown <em>Per Run</em></h2>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4">
+						<hr>
+					</div>
+				</div>
+				<div class="col-md-10 col-md-offset-1">
+					<table class="table table-striped table-responsive" id="runTable">
+						<thead>
+							<tr>
+								<th>Ingredient</th>
+								<th>Carrier</th>
+								<th>Active</th>
+								<th>Total Amount</th>
+								<th>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+					
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+			</div>
+			<!-- End Tab Content -->
 		</div>
-  	  </div>
-    </div>
+		<!--End Tabbed Content-->
+		
+		<div class="row">
+			<div id="chartDiv">
+			</div>
+		</div>
+		
+		<div id="financeSection">
+			<div class="row">
+				<h2 class="text-center">Your Costs</h2>
+					<div class="row">
+						<div class="col-md-4 col-md-offset-4">
+							<hr>
+						</div>
+					</div>
+					<h3 class="text-center"><em>For Your Run</em></h3><br />
+						<div class="row">
+						<div class="col-md-6">
+							<div class="col-md-9 col-md-offset-3">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">Per Bottle Ingredient Costs <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="Per Bottle Costs" data-content="This is the per bottle cost for your product that's split between you and your manufacturer.  If an ingredient is sourced by you it'll show up in your costs, if not it'll show up in your manufacturer." aria-hidden="true"></span></h4>
+									</div>
+										<div class="financeDiv1">
+										</div>
+								</div>
+							</div>
+						</div>
+					<div class="col-md-6">
+						<div class="col-md-9">
+							<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">Total Ingredient Costs <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="Per Bottle Costs" data-content="This is the per bottle cost for your product that's split between you and your manufacturer.  If an ingredient is sourced by you it'll show up in your costs, if not it'll show up in your manufacturer." aria-hidden="true"></span></h4>
+									</div>
+										<div class="financeDiv2">
+										</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-md-offset-4">
+								<hr>
+							</div>
+						</div>
+				<div class="row">
+				<h3 class="text-center"><em>For Your Manufacturer</em></h3><br />
+					<div class="col-md-6">
+						<div class="col-md-9 col-md-offset-3">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h4 class="panel-title">Estimated Quote <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="Per Bottle Costs" data-content="This is the estimated per bottle quote price, it incorporates the ingredient cost for the manufacturer, cost of testing, printing + labels and testing." aria-hidden="true"></span></h4>
+								</div>
+										<div class="financeDiv3">
+										</div>
+								</div>
+							</div>
+						</div>
+					<div class="col-md-6">
+						<div class="col-md-9">
+							<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">Amount Paid to Manufacturer <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="Per Bottle Costs" data-content="This is the per bottle cost for your product that's split between you and your manufacturer.  If an ingredient is sourced by you it'll show up in your costs, if not it'll show up in your manufacturer." aria-hidden="true"></span></h4>
+									</div>
+										<div class="financeDiv4">
+										</div>
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="row">
+							<div class="col-md-4 col-md-offset-4">
+								<hr>
+							</div>
+						</div>
+				<div class="row">
+				<h3 class="text-center"><em>To Get Up And Running</em></h3><br />
+						<div class="col-md-6">
+							<div class="col-md-9 col-md-offset-3">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">Upfront Ingredient Costs <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="Per Bottle Costs" data-content="This is the per bottle cost for your product that's split between you and your manufacturer.  If an ingredient is sourced by you it'll show up in your costs, if not it'll show up in your manufacturer." aria-hidden="true"></span></h4>
+									</div>
+										<div class="financeDiv5">
+										</div>
+								</div>
+							</div>
+						</div>
+					<div class="col-md-6">
+						<div class="col-md-9">
+							<div class="panel panel-primary">
+									<div class="panel-heading">
+										<h4 class="panel-title">Total Amount To Get Started <span class="glyphicon glyphicon-question-sign" data-toggle="popover" title="Per Bottle Costs" data-content="This is the per bottle cost for your product that's split between you and your manufacturer.  If an ingredient is sourced by you it'll show up in your costs, if not it'll show up in your manufacturer." aria-hidden="true"></span></h4>
+									</div>
+										<div class="financeDiv6">
+										</div>
+								</div>
+							</div>
+						</div>
+						</div>
+				<div class="row">
+					<div class="sourcedIngredientsRow">
+					<div class="col-md-10 col-md-offset-1">
+					<h2 class="text-center">For the Ingredients You Sourced Yourself</h2>
+					<table class="table table-striped table-responsive" id="sourcedTable">
+						<thead>
+							<th>Ingredient</th>
+							<th>Cost Per Pack</th>
+							<th>Packs Required</th>
+							<th>Total Cost</th>
+							<th>% Used</th>
+							<th>Amount Left Over</th>
+							<th>Bottles Remaining</th>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					</div>
+					</div>
+				</div>
+					</div>
+				</div>
+			</div>
+		</div>
   </body>
 </html>
